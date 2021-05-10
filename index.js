@@ -16,7 +16,7 @@ const mongoose = require("mongoose");
 
 //define a simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Todo app" });
+  res.json({ message: "Wellcome to Todo app" });
 });
 
 mongoose.Promise = global.Promise;
@@ -24,7 +24,7 @@ mongoose.Promise = global.Promise;
 // Connecting to the database
 
 
-// require('./app/routes/todo.routes.js')(app);
+require('./app/routes/todo.route.js')(app);
 
 // listen for requests
 app.listen(4000, () =>{
