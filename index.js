@@ -16,7 +16,7 @@ const mongoose = require("mongoose");
 
 //define a simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Wellcome to Todo and User app" });
+  res.json({ message: "Wellcome to User app" });
 });
 
 mongoose.Promise = global.Promise;
