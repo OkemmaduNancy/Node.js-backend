@@ -24,7 +24,6 @@ mongoose.Promise = global.Promise;
 // Connecting to the database
 
 
-require('./app/routes/todo.route.js')(app);
 require('./app/routes/user.route.js')(app);
 
 // listen for requests
