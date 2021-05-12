@@ -26,11 +26,18 @@ mongoose.Promise = global.Promise;
 
 require('./app/routes/user.route.js')(app);
 
+// 3!%DSsDiTD3xXAu
+// admin
+
 // listen for requests
 app.listen(4000, () =>{
     mongoose
-  .connect(dbConfig.url, {
+  .connect(dbConfig.prodUrl, {
     useNewUrlParser: true,
+    auth: {
+      user: "admin",
+      password: "3!%DSsDiTD3xXAu"
+    }
   })
   .then(() => {
     console.log("Successfully connected to the database");
