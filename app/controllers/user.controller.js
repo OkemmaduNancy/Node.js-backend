@@ -1,5 +1,4 @@
 // const { isValidObjectId } = require("mongoose");
-const { getMaxListeners } = require("../models/user.model.js");
 const User = require("../models/user.model.js");
 
 // Create and Save a new User
@@ -18,7 +17,7 @@ exports.createUser = (req, res) => {
   User.find({ email: req.body.email })
   .then((result) => {
         if (result.length > 0) {
-            // console.log(result);
+            console.log(result);
             return res.status(404).send({
                 message: "email already exist",
             });

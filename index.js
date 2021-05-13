@@ -28,9 +28,10 @@ require('./app/routes/user.route.js')(app);
 
 // 3!%DSsDiTD3xXAu
 // admin
+const port = process.env.PORT || 4000
 
 // listen for requests
-app.listen(4000, () =>{
+app.listen(port, () =>{
     mongoose
   .connect(dbConfig.prodUrl, {
     useNewUrlParser: true,
