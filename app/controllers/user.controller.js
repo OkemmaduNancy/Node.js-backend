@@ -17,7 +17,6 @@ exports.createUser = (req, res) => {
   User.find({ email: req.body.email })
   .then((result) => {
         if (result.length > 0) {
-            
             return res.status(404).send({
                 message: "email already exist",
             });
