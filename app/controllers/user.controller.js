@@ -3,53 +3,54 @@ const User = require("../models/user.model.js");
 
 // Create and Save a new User
 exports.createUser = (req, res) => {
-  for (const age in req.body) {
-    if (Object.hasOwnProperty.call(req.body, age)) {
-      const element = req.body[age];
+  for (const key in req.body) {
+    if (Object.hasOwnProperty.call(req.body, key)) {
+      const element = req.body[key];
       if (!element) {
         return res.status(400).send({
-          message: `You must provide ${age}`,
+          message: `You must provide ${key}`,
         });
       }
     }
   }
 
-  User.find({ email: req.body.email })
-  .then((result) => {
-        if (result.length > 0) {
-            return res.status(404).send({
-                message: "email already exist",
-            });
-        
-        } else {
-            // Create a User
-            user = new User({
-                name: req.body.name,
-                email: req.body.email,
-                password: req.body.password,
-                age: req.body.age,
-                gender: req.body.gender,
-                country: req.body.country,
-            })
-            user.save()
-            .then((data) => {
-              return res.send(data);
-            })
-            .catch((err) => {
-              return res.status(500).send({
-                message: err.message || "Some error occurred while creating the User.",
-              });
-            });
-        
-        };
-    
-    
-    });
+  User.find({ email: req.body.email }).then((result) => {
+    if (result.length > 0) {
+      console.log(result);
+      return res.status(404).send({
+        message: "email already exist"
+      });
+    }
+    else {
+      const {
+        name,
+        email,
+        password,
+        age,
+        gender,
+        country
 
-  
+      } = req.body
+      // Create a User
+      user = new User({
+        name, email, password, age, gender, country
+
+      });
+      // Save User in the database
+
+      user.save()
+        .then((data) => {
+          return res.send(data);
+        })
+        .catch((err) => {
+          return res.status(500).send({
+            message:
+              err.message || "Some error occurred while creating the User.",
+          });
+        });
+    }
+  });
 };
-  // Save User in the database
-  
 
 // Retrieve and return all users from the database.
 exports.findAllUsers = (req, res) => {
@@ -64,7 +65,7 @@ exports.findAllUsers = (req, res) => {
     });
 };
 
-// Find a single user with a id
+// Find a single user with an id
 exports.findOneUser = (req, res) => {
   User.findById(req.params.id)
     .then((user) => {
@@ -100,8 +101,12 @@ exports.updateUser = (req, res) => {
   User.findByIdAndUpdate(
     req.params.id,
     {
-      title: req.body.name,
+      name: req.body.name,
       email: req.body.email,
+      password: req.body.password,
+      age: req.body.age,
+      gender: req.body.gender,
+      country: req.body.country,
     },
     { new: true }
   )
