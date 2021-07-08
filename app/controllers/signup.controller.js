@@ -1,16 +1,16 @@
-const { updateValidator, createValidator, retrieveValidator } = require("../../validators/products");
-const Product = require("../models/product.model.js");
+const { updateValidator, createValidator, retrieveValidator } = require("../../validators/signup");
+const Signup = require("../models/signup.model.js");
 
 //create a Product
-exports.createProduct = (req, res) => {
+exports.createSignup = (req, res) => {
     const { error, value } = createValidator.validate(req.body)
     if (error) {
         return res.status(400).send(error.details)
     }
-    product = new Product(value);
+    signup = new Signup(value);
 
     // Save Product in database
-    product.save()
+    signup.save()
         .then((data) => {
             return res.send(data);
         })
@@ -22,10 +22,10 @@ exports.createProduct = (req, res) => {
 };
 
 //Retrieve and return all product from database.
-exports.findAllProducts = (req, res) => {
-    Product.find()
-        .then((products) => {
-            res.send(products);
+exports.findAllSignup = (req, res) => {
+    Signup.find()
+        .then((signup) => {
+            res.send(signup);
         })
         .catch((err) => {
             res.status(500).send({
@@ -35,99 +35,96 @@ exports.findAllProducts = (req, res) => {
 };
 
 //Find a single products with id
-exports.findOneProduct = (req, res) => {
-    const { error, value } = retrieveValidator.validate(req.body)
-
+exports.findOneSignup = (req, res) => {
     if (error) {
         return res.status(400).send(error.details)
     }
-    Product.findById(req.params.id)
-
-        .then((product) => {
-            if (!product) {
+    Signup.findById(req.params.id)
+        .then((signup) => {
+            if (!signup) {
                 return res.status(404).send({
-                    message: "Product not found with id" + req.params.id,
+                    message: "not found with id" + req.params.id,
                 });
             }
-            res.send(product)
+            res.send(signup)
         })
         .catch((err) => {
             if (err.kind === "Objectid") {
                 return res.status(404).send({
-                    message: "Product not found with id" + req.params.id,
+                    message: "not found with id" + req.params.id,
                 });
             }
             return res.status(500).send({
-                message: "Error finding product with id" + req.params.id,
+                message: "Error finding with id" + req.params.id,
             });
         });
 };
 
 // Updated a product identified by the id in the request
-exports.updateProduct = (req, res) => {
-    const { error, value } = updateValidator.validate(req.body)
-
+exports.updateSignup = (req, res) => {
     if (error) {
         return res.status(400).send(error.details)
     }
     if (!req.body.name) {
         return res.status(400).send({
-            message: "Product name can not be empty",
+            message: "names can not be empty",
         });
     }
     // Find product and update it with the request body
-    Product.findByIdAndUpdate(req.params.id,
+    Signup.findByIdAndUpdate(req.params.id,
         {
-            name: req.body.name,
-            quantity: req.body.quantity,
-            color: req.body.color,
-            price: req.body.price,
-            categories: req.body.categories,
-            imageUrl: req.body.imageUrl,
-            cart: req.body.cart,
-            description: req.body.description
+            firstname: req.body.name,
+            lastname: req.body.quantity,
+            age: req.body.color,
+            email: req.body.price,
+            date_of_birth: req.body.categories,
+            upload_photo: req.body.imageUrl,
+            gender: req.body.cart,
+            marita_status: req.body.description,
+            country: req.body.description,
+            job: req.body.description
         },
         { new: true }
     )
-        .then((product) => {
-            if (!product) {
+        .then((signup) => {
+            if (!signup) {
                 return res.status(404).send({
-                    message: "Product not found with id " + req.params.id,
+                    message: "error finding with id " + req.params.id,
                 });
             }
-            res.send(product);
+            res.send(signup);
         })
         .catch((err) => {
             if (err.kind === "ObjectId") {
                 return res.status(404).send({
-                    message: "Product not found with id " + req.params.id,
+                    message: " not found with id " + req.params.id,
                 });
             }
             return res.status(500).send({
-                message: "Error updating product with id " + req.params.id,
+                message: "Error updating with id " + req.params.id,
             });
         });
 };
 
 // Delete a product with the specified id in the request
-exports.deleteProduct = (req, res) => {
-    Product.findByIdAndRemove(req.params.id)
-        .then((product) => {
-            if (!product) {
+exports.deleteSignup = (req, res) => {
+    Signup.findByIdAndRemove(req.params.id)
+        .then((signup) => {
+            if (!signup) {
                 return res.status(404).send({
-                    message: "Product not found with id " + req.params.id,
+                    message: " not found with id " + req.params.id,
                 });
             }
-            res.send({ message: "Product deleted successfully!" });
+            res.send({ message: " deleted successfully!" });
         })
         .catch((err) => {
             if (err.kind === "ObjectId" || err.name === "NotFound") {
                 return res.status(404).send({
-                    message: "Product not found with id " + req.params.user,
+                    message: " not found with id " + req.params.user,
                 });
             }
             return res.status(500).send({
-                message: "Could not delete product with id " + req.params.id,
+                message: "Could not delete with id " + req.params.id,
             });
         });
 };
