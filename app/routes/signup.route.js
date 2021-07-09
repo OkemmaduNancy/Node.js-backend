@@ -2,19 +2,19 @@ const signup = require('../controllers/signup.controller.js');
 
 const router = require('express').Router()
 
-// Create a new Product
+// Create a new signup
 router.post('/create', signup.createSignup);
 
-// Retrieve all products
+// Retrieve all signup
 router.get('/all', signup.findAllSignup);
 
-// Retrieve a single product by id
+// Retrieve a single signup by id
 router.get('/:id', signup.findOneSignup);
 
-// Update a Product 
+// Update a signup 
 router.put('/:id', signup.updateSignup);
 
-// Delete a Product by id
+// Delete a signup by id
 router.delete('/:id', signup.deleteSignup);
 
 module.exports = router

@@ -1,15 +1,15 @@
-const { updateValidator, createValidator, retrieveValidator } = require("../../validators/signup");
+const { userValidator } = require("../../validators/signup");
 const Signup = require("../models/signup.model.js");
 
-//create a Product
+//create a Signup
 exports.createSignup = (req, res) => {
-    const { error, value } = createValidator.validate(req.body)
+    const { error, value } = userValidator.validate(req.body)
     if (error) {
         return res.status(400).send(error.details)
     }
     signup = new Signup(value);
 
-    // Save Product in database
+    // Save Signup in database
     signup.save()
         .then((data) => {
             return res.send(data);
@@ -21,7 +21,7 @@ exports.createSignup = (req, res) => {
         });
 };
 
-//Retrieve and return all product from database.
+//Retrieve and return all signup from database.
 exports.findAllSignup = (req, res) => {
     Signup.find()
         .then((signup) => {
@@ -34,11 +34,8 @@ exports.findAllSignup = (req, res) => {
         });
 };
 
-//Find a single products with id
+//Find a single signup with id
 exports.findOneSignup = (req, res) => {
-    if (error) {
-        return res.status(400).send(error.details)
-    }
     Signup.findById(req.params.id)
         .then((signup) => {
             if (!signup) {
@@ -60,29 +57,22 @@ exports.findOneSignup = (req, res) => {
         });
 };
 
-// Updated a product identified by the id in the request
+// Find signup and update it with the request body
 exports.updateSignup = (req, res) => {
-    if (error) {
-        return res.status(400).send(error.details)
-    }
-    if (!req.body.name) {
-        return res.status(400).send({
-            message: "names can not be empty",
-        });
-    }
-    // Find product and update it with the request body
     Signup.findByIdAndUpdate(req.params.id,
         {
-            firstname: req.body.name,
-            lastname: req.body.quantity,
-            age: req.body.color,
-            email: req.body.price,
-            date_of_birth: req.body.categories,
-            upload_photo: req.body.imageUrl,
-            gender: req.body.cart,
-            marita_status: req.body.description,
-            country: req.body.description,
-            job: req.body.description
+            names: {
+                firstname: req.body.firstname,
+                lastname: req.body.lastname
+            },
+            age: req.body.age,
+            email: req.body.email,
+            date_of_birth: req.body.date_of_birth,
+            upload_photo: req.body.upload_photo,
+            gender: req.body.gender,
+            marita_status: req.body.marita_status,
+            country: req.body.country,
+            job: req.body.job
         },
         { new: true }
     )
@@ -106,11 +96,11 @@ exports.updateSignup = (req, res) => {
         });
 };
 
-// Delete a product with the specified id in the request
+// Delete a signup with the specified id in the request
 exports.deleteSignup = (req, res) => {
     Signup.findByIdAndRemove(req.params.id)
-        .then((signup) => {
-            if (!signup) {
+        .then((user) => {
+            if (!user) {
                 return res.status(404).send({
                     message: " not found with id " + req.params.id,
                 });
@@ -120,7 +110,7 @@ exports.deleteSignup = (req, res) => {
         .catch((err) => {
             if (err.kind === "ObjectId" || err.name === "NotFound") {
                 return res.status(404).send({
-                    message: " not found with id " + req.params.user,
+                    message: " not found with id " + req.params.id,
                 });
             }
             return res.status(500).send({

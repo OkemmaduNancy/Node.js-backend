@@ -11,8 +11,14 @@ const SignUpSchema = mongoose.Schema(
         password: String,
         date_of_birth: String,
         upload_photo: String,
-        gender: String,
-        marita_status: String,
+        gender: {
+            type: String,
+            enum: ["Male", "Female"]
+        },
+        marita_status: {
+            type: String,
+            enum: ["Married", "Single", "Engaged"]
+        },
         country: String,
         job: String
     }

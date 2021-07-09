@@ -123,7 +123,7 @@ exports.deleteProduct = (req, res) => {
         .catch((err) => {
             if (err.kind === "ObjectId" || err.name === "NotFound") {
                 return res.status(404).send({
-                    message: "Product not found with id " + req.params.user,
+                    message: "Product not found with id " + req.params.id,
                 });
             }
             return res.status(500).send({

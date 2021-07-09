@@ -11,7 +11,7 @@ const createValidator = Joi.object({
     description: Joi.string().required(),
     imageUrl: Joi.string(),
     cart: Joi.string(),
-    categories: Joi.string().valid("Accessories", "Building", "Outfits", "Please note that this item might be available based on the delivery area").required()
+    categories: Joi.string().valid("Accessories", "Building", "Outfits").required()
 })
 
 exports.createValidator = createValidator

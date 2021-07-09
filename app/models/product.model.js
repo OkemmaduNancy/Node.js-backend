@@ -14,8 +14,8 @@ const ProductSchema = mongoose.Schema(
     description: String,
     categories: {
       type: String,
-      enum: ["Accessories", "Building", "Outfits", "Please note that this item might be available based on the delivery area"]
-    }
+      enum: ["Accessories", "Building", "Outfits"]
+    },
   },
   {
     timestamps: true,

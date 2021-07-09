@@ -1,5 +1,4 @@
-const { createValidator } = require("./create");
-const { retrieveValidator } = require("./retrieve");
-const { updateValidator } = require("./update");
+const { userValidator } = require("./user");
 
-module.exports = { createValidator, retrieveValidator, updateValidator }
+
+module.exports = { userValidator }
