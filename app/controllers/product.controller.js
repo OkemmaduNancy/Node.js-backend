@@ -3,17 +3,13 @@ const Product = require("../models/product.model.js");
 
 //create a Product
 exports.createProduct = (req, res) => {
-
     const { error, value } = createValidator.validate(req.body)
-
     if (error) {
         return res.status(400).send(error.details)
     }
-
     product = new Product(value);
 
     // Save Product in database
-
     product.save()
         .then((data) => {
             return res.send(data);
@@ -26,7 +22,6 @@ exports.createProduct = (req, res) => {
 };
 
 //Retrieve and return all product from database.
-
 exports.findAllProducts = (req, res) => {
     Product.find()
         .then((products) => {
@@ -70,7 +65,6 @@ exports.findOneProduct = (req, res) => {
 
 // Updated a product identified by the id in the request
 exports.updateProduct = (req, res) => {
-    // Validate Request
     const { error, value } = updateValidator.validate(req.body)
 
     if (error) {
@@ -90,6 +84,7 @@ exports.updateProduct = (req, res) => {
             price: req.body.price,
             categories: req.body.categories,
             imageUrl: req.body.imageUrl,
+            cart: req.body.cart,
             description: req.body.description
         },
         { new: true }
@@ -116,7 +111,6 @@ exports.updateProduct = (req, res) => {
 
 // Delete a product with the specified id in the request
 exports.deleteProduct = (req, res) => {
-
     Product.findByIdAndRemove(req.params.id)
         .then((product) => {
             if (!product) {
@@ -129,7 +123,7 @@ exports.deleteProduct = (req, res) => {
         .catch((err) => {
             if (err.kind === "ObjectId" || err.name === "NotFound") {
                 return res.status(404).send({
-                    message: "Product not found with id " + req.params.user,
+                    message: "Product not found with id " + req.params.id,
                 });
             }
             return res.status(500).send({

@@ -1,4 +1,3 @@
-// const { isValidObjectId } = require("mongoose");
 const User = require("../models/user.model.js");
 
 // Create and Save a new User
@@ -31,13 +30,14 @@ exports.createUser = (req, res) => {
         country
 
       } = req.body
+
       // Create a User
       user = new User({
         name, email, password, age, gender, country
 
       });
-      // Save User in the database
 
+      // Save User in the database
       user.save()
         .then((data) => {
           return res.send(data);

@@ -12,6 +12,7 @@ const updateValidator = Joi.object({
     color: Joi.string().valid("red", "white", "blue", "orange", "black", "yellow", "green"),
     description: Joi.string(),
     imageUrl: Joi.string(),
+    cart: Joi.string(),
     categories: Joi.string().valid("accesories", "building", "outfits"),
 })
 
