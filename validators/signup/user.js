@@ -5,7 +5,7 @@ const userValidator = Joi.object({
     lastname: Joi.string().required(),
     age: Joi.number().required(),
     email: Joi.string().required(),
-    date_of_birth: Joi.number().required(),
+    date_of_birth: Joi.date().required(),
     password: Joi.string()
         .min(6)
         .max(10)
