@@ -5,16 +5,16 @@ const userValidator = Joi.object({
     lastname: Joi.string().required(),
     age: Joi.number().required(),
     email: Joi.string().required(),
-    date_of_birth: Joi.number().required(),
+    date_of_birth: Joi.date().required(),
     password: Joi.string()
         .min(6)
         .max(10)
-        .required(),
-    upload_photo: Joi.string().required(),
+        .required().required(),
+    upload_photo: Joi.string(),
     marita_status: Joi.string(),
-    country: Joi.string().required(),
-    job: Joi.string().required(),
-    gender: Joi.string().valid("Male", "Female").required()
+    country: Joi.string(),
+    job: Joi.string(),
+    gender: Joi.string()
 })
 
 exports.userValidator = userValidator

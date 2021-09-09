@@ -5,7 +5,6 @@ const updateValidator = Joi.object({
         .min(3)
         .max(30)
         .required(),
-    // .message("You must provide a name without num"),
     quantity: Joi.number(),
     email: Joi.string().email(),
     price: Joi.number(),

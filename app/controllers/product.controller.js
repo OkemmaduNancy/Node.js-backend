@@ -1,5 +1,5 @@
 const { updateValidator, createValidator, retrieveValidator } = require("../../validators/products");
-const Product = require("../models/product.model.js");
+const User = require("../models/user.model.js");
 
 //create a Product
 exports.createProduct = (req, res) => {
@@ -7,7 +7,7 @@ exports.createProduct = (req, res) => {
     if (error) {
         return res.status(400).send(error.details)
     }
-    product = new Product(value);
+    product = new User(value);
 
     // Save Product in database
     product.save()
@@ -23,13 +23,13 @@ exports.createProduct = (req, res) => {
 
 //Retrieve and return all product from database.
 exports.findAllProducts = (req, res) => {
-    Product.find()
-        .then((products) => {
-            res.send(products);
+    User.find()
+        .then((user) => {
+            res.send(user);
         })
         .catch((err) => {
             res.status(500).send({
-                message: err.message || "error occured while gettin products.",
+                message: err.message || "error occured while getting products.",
             });
         });
 };
@@ -41,10 +41,10 @@ exports.findOneProduct = (req, res) => {
     if (error) {
         return res.status(400).send(error.details)
     }
-    Product.findById(req.params.id)
+    User.findById(req.params.id)
 
-        .then((product) => {
-            if (!product) {
+        .then((user) => {
+            if (!user) {
                 return res.status(404).send({
                     message: "Product not found with id" + req.params.id,
                 });
@@ -76,7 +76,7 @@ exports.updateProduct = (req, res) => {
         });
     }
     // Find product and update it with the request body
-    Product.findByIdAndUpdate(req.params.id,
+    User.findByIdAndUpdate(req.params.id,
         {
             name: req.body.name,
             quantity: req.body.quantity,
@@ -89,8 +89,8 @@ exports.updateProduct = (req, res) => {
         },
         { new: true }
     )
-        .then((product) => {
-            if (!product) {
+        .then((user) => {
+            if (!user) {
                 return res.status(404).send({
                     message: "Product not found with id " + req.params.id,
                 });
@@ -111,9 +111,9 @@ exports.updateProduct = (req, res) => {
 
 // Delete a product with the specified id in the request
 exports.deleteProduct = (req, res) => {
-    Product.findByIdAndRemove(req.params.id)
-        .then((product) => {
-            if (!product) {
+    User.findByIdAndRemove(req.params.id)
+        .then((user) => {
+            if (!user) {
                 return res.status(404).send({
                     message: "Product not found with id " + req.params.id,
                 });

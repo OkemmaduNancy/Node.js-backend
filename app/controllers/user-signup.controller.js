@@ -1,5 +1,5 @@
 const { userValidator } = require("../../validators/signup");
-const Signup = require("../models/signup.model.js");
+const User = require("../models/user.model.js");
 
 //create a Signup
 exports.createSignup = (req, res) => {
@@ -7,7 +7,7 @@ exports.createSignup = (req, res) => {
     if (error) {
         return res.status(400).send(error.details)
     }
-    signup = new Signup(value);
+    signup = new User(value);
 
     // Save Signup in database
     signup.save()
@@ -16,16 +16,16 @@ exports.createSignup = (req, res) => {
         })
         .catch((err) => {
             return res.status(500).send({
-                message: err.message || "error occured while creating the product.",
+                message: err.message || "error occured while signing up .",
             });
         });
 };
 
 //Retrieve and return all signup from database.
 exports.findAllSignup = (req, res) => {
-    Signup.find()
-        .then((signup) => {
-            res.send(signup);
+    User.find()
+        .then((user) => {
+            res.send(user);
         })
         .catch((err) => {
             res.status(500).send({
@@ -36,14 +36,14 @@ exports.findAllSignup = (req, res) => {
 
 //Find a single signup with id
 exports.findOneSignup = (req, res) => {
-    Signup.findById(req.params.id)
-        .then((signup) => {
-            if (!signup) {
+    User.findById(req.params.id)
+        .then((user) => {
+            if (!user) {
                 return res.status(404).send({
                     message: "not found with id" + req.params.id,
                 });
             }
-            res.send(signup)
+            res.send(user)
         })
         .catch((err) => {
             if (err.kind === "Objectid") {
@@ -59,7 +59,7 @@ exports.findOneSignup = (req, res) => {
 
 // Find signup and update it with the request body
 exports.updateSignup = (req, res) => {
-    Signup.findByIdAndUpdate(req.params.id,
+    User.findByIdAndUpdate(req.params.id,
         {
             names: {
                 firstname: req.body.firstname,
@@ -76,8 +76,8 @@ exports.updateSignup = (req, res) => {
         },
         { new: true }
     )
-        .then((signup) => {
-            if (!signup) {
+        .then((user) => {
+            if (!user) {
                 return res.status(404).send({
                     message: "error finding with id " + req.params.id,
                 });
@@ -98,7 +98,7 @@ exports.updateSignup = (req, res) => {
 
 // Delete a signup with the specified id in the request
 exports.deleteSignup = (req, res) => {
-    Signup.findByIdAndRemove(req.params.id)
+    User.findByIdAndRemove(req.params.id)
         .then((user) => {
             if (!user) {
                 return res.status(404).send({
