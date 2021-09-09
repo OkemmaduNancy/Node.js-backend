@@ -17,6 +17,7 @@ const UserSchema = mongoose.Schema(
     imageUrl: String,
     description: String,
     password: String,
+    country: String,
     date_of_birth: Date,
     upload_photo: String,
     categories: {
@@ -29,7 +30,7 @@ const UserSchema = mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ["female", "male"],
+      enum: ["Female", "Male"],
     },
     marita_status: {
         type: String,

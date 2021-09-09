@@ -16,7 +16,7 @@ exports.createSignup = (req, res) => {
         })
         .catch((err) => {
             return res.status(500).send({
-                message: err.message || "error occured while creating the product.",
+                message: err.message || "error occured while signing up .",
             });
         });
 };
